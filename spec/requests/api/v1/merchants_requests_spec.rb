@@ -11,10 +11,17 @@ describe 'Merchants API' do
 
       merchants = JSON.parse(response.body, symbolize_names: true)
       merchant = merchants.first
-      
+
       expect(merchants.count).to eq(3)
       expect(merchant).to have_key(:name)
     end
+    it 'returns a single merchant' do
+      create(:merchant)
+
+      get "/api/v1/merchant"
+
+      expect(response).to be_successful
+      expect(merchant).to have_key(:name)
+    end
   end
-  
 end
