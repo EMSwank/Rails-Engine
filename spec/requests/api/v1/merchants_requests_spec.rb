@@ -16,9 +16,9 @@ describe 'Merchants API' do
       expect(merchant).to have_key(:name)
     end
     it 'returns a single merchant' do
-      create(:merchant)
+      id = create(:merchant).id
 
-      get "/api/v1/merchant"
+      get "/api/v1/merchants/#{id}"
 
       expect(response).to be_successful
       expect(merchant).to have_key(:name)
