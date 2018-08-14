@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       resources :merchants, only: [:index, :show]
       get '/api/v1/transactions/find?', to: 'transactions#show'
       resources :transactions, only: [:index, :show]
+      get '/invoices/find', to: 'invoices/search#show'
+      resources :invoices, only: [:index, :show]
     end
   end
 end
