@@ -2,8 +2,11 @@ require 'rails_helper'
 
 describe "Transactions API" do
   context "GET /api/v1" do
-    it "returns a list of merchants" do
-      create_list(:transaction, 3)
+    it "returns a list of transactions" do
+      invoice = create(:invoice)
+      create_list(:transaction, 3, invoice_id: invoice.id)
+
+byebug
 
       get "/api/v1/transactions"
 
