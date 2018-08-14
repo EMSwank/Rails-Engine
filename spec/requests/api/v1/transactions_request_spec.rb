@@ -20,5 +20,18 @@ describe "Transactions API" do
       expect(transaction).to have_key(:credit_card_number)
       expect(transaction).to have_key(:result)
     end
+
+    it 'returns a single transaction' do
+      invoice = create(:invoice)
+      id = create(:transaction, invoice_id: invoice.id)
+
+      get "/api/v1/transactions/#{id}"
+
+      transactions = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to be_successful
+      expect(transaction["id"]).to eq(id)
+
+    end
   end
 end
