@@ -13,10 +13,10 @@ describe "Transactions API" do
       transaction = transaction.first
 
       expect(transactions.count).to eq(3)
-      expect(merchant).to have_key(:invoice_id)
-      expect(merchant).to have_key(:credit_card_number)
-      expect(merchant).to have_key(:credit_card_expiration_date)
-      expect(merchant).to have_key(:result)
+      expect(transaction).to have_key(:invoice_id)
+      expect(transaction).to have_key(:credit_card_number)
+      expect(transaction).to have_key(:credit_card_expiration_date)
+      expect(transaction).to have_key(:result)
     end
   end
 end
