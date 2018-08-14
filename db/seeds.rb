@@ -33,3 +33,13 @@ CSV.foreach('./data/invoices.csv', headers: true, header_converters: :symbol) do
                  created_at: invoice[:created_at],
                  updated_at: invoice[:updated_at])
 end
+
+CSV.foreach('./data/invoice_items.csv', headers: true, header_converters: :symbol) do |invoice_item|
+  InvoiceItem.create(id: invoice_item[:id],
+                 item_id: invoice_item[:item_id],
+                 invoice_id: invoice_item[:invoice_id],
+                 quantity: invoice_item[:quantity],
+                 unit_price: invoice_item[:unit_price],
+                 created_at: invoice_item[:created_at],
+                 updated_at: invoice_item[:updated_at])
+end
