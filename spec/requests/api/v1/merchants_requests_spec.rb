@@ -15,6 +15,7 @@ describe 'Merchants API' do
       expect(merchants.count).to eq(3)
       expect(merchant).to have_key(:name)
     end
+    
     it 'returns a single merchant' do
       id = create(:merchant).id
 

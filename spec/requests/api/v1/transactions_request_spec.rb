@@ -23,11 +23,11 @@ describe "Transactions API" do
 
     it 'returns a single transaction' do
       invoice = create(:invoice)
-      id = create(:transaction, invoice_id: invoice.id)
+      id = create(:transaction, invoice_id: invoice.id).id
 
       get "/api/v1/transactions/#{id}"
 
-      transactions = JSON.parse(response.body, symbolize_names: true)
+      transaction = JSON.parse(response.body)
 
       expect(response).to be_successful
       expect(transaction["id"]).to eq(id)
