@@ -43,3 +43,13 @@ CSV.foreach('./data/invoice_items.csv', headers: true, header_converters: :symbo
                  created_at: invoice_item[:created_at],
                  updated_at: invoice_item[:updated_at])
 end
+
+CSV.foreach('./data/transactions.csv', headers: true, header_converters: :symbol) do |transaction|
+  Transaction.create(id: transaction[:id],
+                 invoice_id: transaction[:invoice_id],
+                 credit_card_number: transaction[:credit_card_number],
+                 credit_card_expiration_date: transaction[:credit_card_expiration_date],
+                 result: transaction[:result],
+                 created_at: transaction[:created_at],
+                 updated_at: transaction[:updated_at])
+end
