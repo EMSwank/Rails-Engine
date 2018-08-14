@@ -58,5 +58,16 @@ describe 'Merchants API' do
       expect(response).to be_successful
       expect(merchant["created_at"]).to eq("2012-03-27T14:54:05.000Z")
     end
+
+    it 'finds updated at by query params' do
+      created_at = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC" ).updated_at
+
+      get "/api/v1/merchants/find?updated_at=#{updated_at}"
+
+      merchant = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(merchant["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
+    end
   end
 end
