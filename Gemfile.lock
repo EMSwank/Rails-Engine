@@ -58,6 +58,8 @@ GEM
     factory_bot_rails (4.10.0)
       factory_bot (~> 4.10.0)
       railties (>= 3.0.0)
+    faker (1.9.1)
+      i18n (>= 0.7)
     ffi (1.9.25)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -138,6 +140,8 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     ruby_dep (1.5.0)
+    shoulda-matchers (3.1.2)
+      activesupport (>= 4.0.0)
     simplecov (0.16.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -170,12 +174,14 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
   factory_bot_rails
+  faker
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)
   pry
   puma (~> 3.11)
   rails (~> 5.2.1)
   rspec-rails
+  shoulda-matchers
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
