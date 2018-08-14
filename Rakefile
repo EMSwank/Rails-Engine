@@ -4,3 +4,8 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+desc "Outer task."
+  task :get_data do
+    `rake db:{drop,create,migrate,seed}`
+  end
