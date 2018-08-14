@@ -60,7 +60,7 @@ describe 'Merchants API' do
     end
 
     it 'finds updated at by query params' do
-      created_at = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC" ).updated_at
+      updated_at = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC" ).updated_at
 
       get "/api/v1/merchants/find?updated_at=#{updated_at}"
 
