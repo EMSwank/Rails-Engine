@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :transactions, only: [:index, :show]
       get '/invoices/find', to: 'invoices/search#show'
       resources :invoices, only: [:index, :show]
-
+      get '/customers/find', to: 'customers/search#show'
       resources :customers, only: [:index, :show]
     end
   end
