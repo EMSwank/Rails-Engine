@@ -10,5 +10,6 @@ class Api::V1::Customers::SearchController < ApplicationController
 
   def index
     render json: Customer.where("id=?", params[:id]) if params[:id]
+    render json: Customer.where("first_name=?", params[:first_name]) if params[:first_name]
   end
 end
