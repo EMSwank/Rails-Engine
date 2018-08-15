@@ -73,7 +73,7 @@ describe 'Invoices API' do
       expect(invoice['status']).to eq(stts)
     end
     it 'displays a single json object by created_at' do
-      invoice_thing = create(:invoice, created_at: "2012-03-09 08:57:21 UTC")
+      invoice_thing = create(:invoice, status: '-98gyp24ichb', created_at: "2012-03-09 08:57:21 UTC")
 
       get "/api/v1/invoices/find?created_at=#{invoice_thing.created_at}"
 
@@ -81,10 +81,10 @@ describe 'Invoices API' do
 
       invoice = JSON.parse(response.body)
 
-      expect(invoice['created_at']).to eq("2012-03-09T08:57:21.000Z")
+      expect(invoice['status']).to eq(invoice_thing.status)
     end
     it 'displays a single json object by updated_at' do
-      invoice_thing = create(:invoice, updated_at: "2012-03-09 08:57:21 UTC")
+      invoice_thing = create(:invoice, status: '-98gyp24ichb', updated_at: "2012-03-09 08:57:21 UTC")
 
       get "/api/v1/invoices/find?updated_at=#{invoice_thing.updated_at}"
 
@@ -92,7 +92,7 @@ describe 'Invoices API' do
 
       invoice = JSON.parse(response.body)
 
-      expect(invoice['updated_at']).to eq("2012-03-09T08:57:21.000Z")
+      expect(invoice['status']).to eq(invoice_thing.status)
     end
   end
   context 'GET /api/v1/invoices/find_all?parameters' do
@@ -144,7 +144,7 @@ describe 'Invoices API' do
     it 'displays all json objects by status' do
       inv_1 = create(:invoice, status: 'shipped')
       inv_2 = create(:invoice, status: 'shipped')
-      inv_3 = create(:invoice, status: 'shipped')
+      inv_3 = create(:invoice, status: 'cancelled')
       inv_4 = create(:invoice, status: 'shipped')
 
       get "/api/v1/invoices/find_all?status=shipped"
@@ -153,13 +153,13 @@ describe 'Invoices API' do
 
       invoice = JSON.parse(response.body)
 
-      expect(invoice.length).to eq(4)
+      expect(invoice.length).to eq(3)
       expect(invoice.first['status']).to eq(inv_1.status)
       expect(invoice.last['status']).to eq(inv_4.status)
     end
     it 'displays all json objects by created_at' do
-      inv_1 = create(:invoice, created_at: "2012-03-09 08:57:21 UTC")
-      inv_2 = create(:invoice, created_at: "2012-03-09 08:57:21 UTC")
+      inv_1 = create(:invoice, status: '78yguafb', created_at: "2012-03-09 08:57:21 UTC")
+      inv_2 = create(:invoice, status: 'jhfoiae8', created_at: "2012-03-09 08:57:21 UTC")
 
       get "/api/v1/invoices/find_all?created_at=#{inv_1.created_at}"
 
@@ -168,12 +168,12 @@ describe 'Invoices API' do
       invoice = JSON.parse(response.body)
 
       expect(invoice.length).to eq(2)
-      expect(invoice.first['created_at']).to eq("2012-03-09T08:57:21.000Z")
-      expect(invoice.last['created_at']).to eq("2012-03-09T08:57:21.000Z")
+      expect(invoice.first['status']).to eq(inv_1.status)
+      expect(invoice.last['status']).to eq(inv_2.status)
     end
     it 'displays all json objects by updated_at' do
-      inv_1 = create(:invoice, updated_at: "2012-03-09 08:57:21 UTC")
-      inv_2 = create(:invoice, updated_at: "2012-03-09 08:57:21 UTC")
+      inv_1 = create(:invoice, status: '78yguafb', updated_at: "2012-03-09 08:57:21 UTC")
+      inv_2 = create(:invoice, status: 'jhfoiae8', updated_at: "2012-03-09 08:57:21 UTC")
 
       get "/api/v1/invoices/find_all?updated_at=#{inv_1.updated_at}"
 
@@ -182,8 +182,8 @@ describe 'Invoices API' do
       invoice = JSON.parse(response.body)
 
       expect(invoice.length).to eq(2)
-      expect(invoice.first['updated_at']).to eq("2012-03-09T08:57:21.000Z")
-      expect(invoice.last['updated_at']).to eq("2012-03-09T08:57:21.000Z")
+      expect(invoice.first['status']).to eq(inv_1.status)
+      expect(invoice.last['status']).to eq(inv_2.status)
     end
   end
 end
