@@ -111,6 +111,20 @@ describe 'Customers API' do
 
       expect(customer.length).to eq(2)
     end
+
+    it 'find_all by last_name' do
+      last_name1 = create(:customer, last_name: "Bob").last_name
+      last_name2 = create(:customer, last_name: last_name1).last_name
+      last_name3 = create(:customer).last_name
+
+      get "/api/v1/customers/find_all?last_name=#{last_name1}"
+
+      expect(response).to be_successful
+
+      customer = JSON.parse(response.body)
+
+      expect(customer.length).to eq(2)
+    end
   end
   
 end
