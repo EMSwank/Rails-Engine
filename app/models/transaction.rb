@@ -3,4 +3,7 @@ class Transaction < ApplicationRecord
                         :credit_card_number,
                         :result
   
+  # scope :success, -> { where(result: 'success') }
+
+  # default_scope -> { order(:id, :asc) }
 end
