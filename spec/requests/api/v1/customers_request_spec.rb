@@ -82,6 +82,21 @@ describe 'Customers API' do
       expect(response).to be_successful
       expect(customer["updated_at"]).to eq("2012-03-27T14:56:35.000Z")
     end
-
   end
+
+  context "GET /api/v1/customers/find_all?parameters" do
+    it 'find_all by id' do
+      id_1 = create(:customer).id
+      id_2 = create(:customer).id
+      id_3 = create(:customer).id
+
+      get "/api/v1/customers/find_all?id=#{id_1}"
+
+      expect(response).to be_successful
+
+      customer = JSON.parse(response.body)
+      expect(customer.length).to eq(1)
+    end
+  end
+  
 end
