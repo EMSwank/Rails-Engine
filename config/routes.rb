@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get '/api/v1/transactions/find?', to: 'transactions#show'
       resources :transactions, only: [:index, :show]
       get '/invoices/find', to: 'invoices/search#show'
+      get '/invoices/find_all', to: 'invoices/search#index'
       resources :invoices, only: [:index, :show]
     end
   end
