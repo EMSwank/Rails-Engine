@@ -60,5 +60,17 @@ describe 'Customers API' do
       expect(response).to be_successful
       expect(customer["last_name"]).to eq(name)
     end
+
+    it 'finds created_at by query params' do
+      created_at = create(:customer, created_at: "2012-03-27 14:56:35 UTC" ).created_at
+
+      get "/api/v1/customers/find?created_at=#{created_at}"
+
+      customer = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(customer["created_at"]).to eq("2012-03-27T14:56:35.000Z")
+    end
+
   end
 end
