@@ -118,6 +118,19 @@ describe "Transactions API" do
       expect(transaction.length).to eq(1)
 
     end
+
+    it 'finds all invoice_ids through find_all query params' do
+      invoice = create(:invoice)
+      transaction = create(:transaction, invoice_id: invoice.id)
+
+      get "/api/v1/transactions/find_all?invoice_id=#{invoice.id}"
+
+      transaction = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(transaction[0]["invoice_id"]).to eq(invoice.id)
+
+    end
   end
   
 end
