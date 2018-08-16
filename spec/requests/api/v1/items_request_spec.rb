@@ -62,7 +62,8 @@ describe 'Items API' do
       expect(item['description']).to eq(desc)
     end
     it 'displays a single json object by unit price' do
-      uprice = create(:item).unit_price
+      create(:item, unit_price: 1701)
+      uprice = '17.01'
 
       get "/api/v1/items/find?unit_price=#{uprice}"
 
@@ -96,15 +97,15 @@ describe 'Items API' do
       expect(item['created_at']).to eq("2012-03-09T08:57:21.000Z")
     end
     it 'displays a single json object by updated_at' do
-      item = create(:item, updated_at: "2012-03-09 08:57:21 UTC")
+      item_1 = create(:item, name: 'Chris', updated_at: "2012-03-09 08:57:21 UTC")
 
-      get "/api/v1/items/find?updated_at=#{item.updated_at}"
+      get "/api/v1/items/find?updated_at=#{item_1.updated_at}"
 
       expect(response).to be_successful
 
       item = JSON.parse(response.body)
 
-      expect(item['updated_at']).to eq("2012-03-09T08:57:21.000Z")
+      expect(item['name']).to eq(item_1.name)
     end
   end
   context 'GET /api/v1/items/find_all?parameters' do
@@ -170,24 +171,25 @@ describe 'Items API' do
       expect(item.last['merchant_id']).to eq(item_3.merchant_id)
     end
     it 'displays all json objects by unit_price' do
-      item_1 = create(:item, unit_price: 466)
-      item_2 = create(:item, unit_price: 466)
-      item_3 = create(:item, unit_price: 464)
-      item_4 = create(:item, unit_price: 466)
+      item_1 = create(:item, unit_price: 46605)
+      item_2 = create(:item, unit_price: 46605)
+      item_3 = create(:item, unit_price: 46498)
+      item_4 = create(:item, unit_price: 46605)
+      price = '466.05'
 
-      get "/api/v1/items/find_all?unit_price=#{item_1.unit_price}"
+      get "/api/v1/items/find_all?unit_price=#{price}"
 
       expect(response).to be_successful
 
       items = JSON.parse(response.body)
 
       expect(items.length).to eq(3)
-      expect(items.first['unit_price']).to eq(item_1.unit_price)
-      expect(items.last['unit_price']).to eq(item_4.unit_price)
+      expect(items.first['unit_price']).to eq(price)
+      expect(items.last['unit_price']).to eq(price)
     end
     it 'displays all json objects by created_at' do
-      item_1 = create(:item, created_at: "2012-03-09 08:57:21 UTC")
-      item_2 = create(:item, created_at: "2012-03-09 08:57:21 UTC")
+      item_1 = create(:item, name: 'lkjhfgdaf', created_at: "2012-03-09 08:57:21 UTC")
+      item_2 = create(:item, name: 'lkjhfgda ljbdf', created_at: "2012-03-09 08:57:21 UTC")
 
       get "/api/v1/items/find_all?created_at=#{item_1.created_at}"
 
@@ -196,12 +198,12 @@ describe 'Items API' do
       items = JSON.parse(response.body)
 
       expect(items.length).to eq(2)
-      expect(items.first['created_at']).to eq("2012-03-09T08:57:21.000Z")
-      expect(items.last['created_at']).to eq("2012-03-09T08:57:21.000Z")
+      expect(items.first['name']).to eq(item_1.name)
+      expect(items.last['name']).to eq(item_2.name)
     end
     it 'displays all json objects by updated_at' do
-      item_1 = create(:item, updated_at: "2012-03-09 08:57:21 UTC")
-      item_2 = create(:item, updated_at: "2012-03-09 08:57:21 UTC")
+      item_1 = create(:item, name: ';iduyfniua', updated_at: "2012-03-09 08:57:21 UTC")
+      item_2 = create(:item, name: 'uidyduyudyuduyfniua', updated_at: "2012-03-09 08:57:21 UTC")
 
       get "/api/v1/items/find_all?updated_at=#{item_1.updated_at}"
 
@@ -210,8 +212,8 @@ describe 'Items API' do
       item = JSON.parse(response.body)
 
       expect(item.length).to eq(2)
-      expect(item.first['updated_at']).to eq("2012-03-09T08:57:21.000Z")
-      expect(item.last['updated_at']).to eq("2012-03-09T08:57:21.000Z")
+      expect(item.first['name']).to eq(item_1.name)
+      expect(item.last['name']).to eq(item_2.name)
     end
   end
 end
