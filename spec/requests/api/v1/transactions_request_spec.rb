@@ -166,6 +166,18 @@ describe "Transactions API" do
       expect(response).to be_successful
       expect(response_body[0]["id"]).to eq(transaction.id)
     end
+
+    it 'finds all by updated_at' do
+      invoice = create(:invoice)
+      transaction = create(:transaction, invoice_id: invoice.id, updated_at: "2012-03-27 14:56:35 UTC")
+
+      get "/api/v1/transactions/find_all?updated_at=#{transaction.updated_at}"
+
+      response_body = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(response_body[0]["id"]).to eq(transaction.id)
+    end
   end
   
 end
