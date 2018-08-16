@@ -49,7 +49,7 @@ describe "Transactions API" do
 
     it 'finds credit_card_numbers through query params' do
       invoice = create(:invoice)
-      cc_num = create(:transaction, invoice_id: invoice.id).credit_card_number
+      cc_num = create(:transaction, invoice_id: invoice.id).credit_card_number.to_s
 
       get "/api/v1/transactions/find?credit_card_number=#{cc_num}"
 
@@ -135,12 +135,12 @@ describe "Transactions API" do
       invoice = create(:invoice)
       transaction = create(:transaction, invoice_id: invoice.id)
 
-      get "/api/v1/transactions/find_all?credit_card_number=#{transaction.credit_card_number}"
+      get "/api/v1/transactions/find_all?credit_card_number=#{transaction.credit_card_number.to_s}"
 
       response_body = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(response_body[0]["credit_card_number"]).to eq(transaction.credit_card_number)
+      expect(response_body[0]["credit_card_number"]).to eq(transaction.credit_card_number.to_s)
     end
 
     it 'finds all by result' do
@@ -179,5 +179,5 @@ describe "Transactions API" do
       expect(response_body[0]["id"]).to eq(transaction.id)
     end
   end
-  
+
 end
