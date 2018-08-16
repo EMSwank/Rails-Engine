@@ -59,5 +59,18 @@ describe "Transactions API" do
       expect(transaction["credit_card_number"]).to eq(cc_num)
 
     end
+
+    it 'finds result through query params' do
+      invoice = create(:invoice)
+      result = create(:transaction, invoice_id: invoice.id).result
+
+      get "/api/v1/transactions/find?result=#{result}"
+
+      transaction = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(transaction["result"]).to eq(result)
+
+    end
   end
 end
