@@ -72,5 +72,20 @@ describe "Transactions API" do
       expect(transaction["result"]).to eq(result)
 
     end
+
+    it 'finds result through created_at params' do
+      invoice = create(:invoice)
+      transaction1 = create(:transaction, invoice_id: invoice.id, created_at: "2012-03-27 14:56:35 UTC")
+      transaction2 = create(:transaction, invoice_id: invoice.id)
+      transaction3 = create(:transaction, invoice_id: invoice.id)
+
+      get "/api/v1/transactions/find?created_at=#{transaction1.created_at}"
+
+      transaction = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(transaction["id"]).to eq(transaction1.id)
+
+    end
   end
 end
