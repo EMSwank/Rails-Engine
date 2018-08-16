@@ -82,7 +82,7 @@ describe 'Invoice Items API' do
 
       invoice_item = JSON.parse(response.body)
 
-      expect(invoice_item['unit_price']).to eq(i_item.unit_price)
+      expect(invoice_item['unit_price']).to eq(uprice)
     end
     it 'displays a single json object by created_at' do
       i_item = create(:invoice_item, created_at: "2012-03-09 08:57:21 UTC")
@@ -170,8 +170,8 @@ describe 'Invoice Items API' do
       i_item = JSON.parse(response.body)
 
       expect(i_item.length).to eq(2)
-      expect(i_item.first['unit_price']).to eq(inv_item_1.unit_price)
-      expect(i_item.last['unit_price']).to eq(inv_item_3.unit_price)
+      expect(i_item.first['unit_price']).to eq(u_price)
+      expect(i_item.last['unit_price']).to eq(u_price)
     end
     it 'displays all json objects by item_id' do
       item_1 = create(:item)
