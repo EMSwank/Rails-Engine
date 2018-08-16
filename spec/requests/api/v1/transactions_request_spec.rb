@@ -142,6 +142,18 @@ describe "Transactions API" do
       expect(response).to be_successful
       expect(response_body[0]["credit_card_number"]).to eq(transaction.credit_card_number)
     end
+
+    it 'finds all by result' do
+      invoice = create(:invoice)
+      transaction = create(:transaction, invoice_id: invoice.id)
+
+      get "/api/v1/transactions/find_all?result=#{transaction.result}"
+
+      response_body = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(response_body[0]["result"]).to eq(transaction.result)
+    end
   end
   
 end
