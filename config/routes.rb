@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :merchants, only: [:index, :show]
       get '/transactions/find', to: 'transactions/search#show'
       get '/transactions/find_all', to: 'transactions/search#index'
+      get '/transactions/:id/invoice', to: 'transactions/invoice_relation#show'
       resources :transactions, only: [:index, :show]
       get '/invoices/find', to: 'invoices/search#show'
       get '/invoices/find_all', to: 'invoices/search#index'
@@ -24,6 +25,8 @@ Rails.application.routes.draw do
       resources :items, only: [:index, :show]
       get '/customers/find', to: 'customers/search#show'
       get '/customers/find_all', to: 'customers/search#index'
+      get '/customers/:id/invoices', to: 'customers/invoices_relation#index'
+      get '/customers/:id/transactions', to: 'customers/transactions_relation#index'
       resources :customers, only: [:index, :show]
       get '/invoice_items/find', to: 'invoice_items/search#show'
       get '/invoice_items/find_all', to: 'invoice_items/search#index'
