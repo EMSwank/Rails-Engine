@@ -49,25 +49,25 @@ describe 'Merchants API' do
     end
 
     it 'finds created at by query params' do
-      created_at = create(:merchant, created_at: "2012-03-27 14:54:05 UTC" ).created_at
+      new_merchant = create(:merchant, created_at: "2012-03-27 14:54:05 UTC" )
 
-      get "/api/v1/merchants/find?created_at=#{created_at}"
+      get "/api/v1/merchants/find?created_at=#{new_merchant.created_at}"
 
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchant["created_at"]).to eq("2012-03-27T14:54:05.000Z")
+      expect(merchant["id"]).to eq(new_merchant.id)
     end
 
     it 'finds updated at by query params' do
-      updated_at = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC" ).updated_at
+      new_merchant = create(:merchant, updated_at: "2012-03-27 14:54:05 UTC" )
 
-      get "/api/v1/merchants/find?updated_at=#{updated_at}"
+      get "/api/v1/merchants/find?updated_at=#{new_merchant.updated_at}"
 
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchant["updated_at"]).to eq("2012-03-27T14:54:05.000Z")
+      expect(merchant["id"]).to eq(new_merchant.id)
     end
   end
 
