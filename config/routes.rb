@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :merchants, only: [:index, :show]
 
       get '/transactions/find', to: 'transactions/search#show'
+      get '/transactions/find_all', to: 'transactions/search#index'
       resources :transactions, only: [:index, :show]
 
       get '/invoices/find', to: 'invoices/search#show'
