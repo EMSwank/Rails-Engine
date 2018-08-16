@@ -19,4 +19,22 @@ describe "API for Merchants Relations" do
       expect(items.last["id"]).to eq(items3.id)
     end
   end
+  context "GET /api/v1/merchants/:id/invoice" do
+    it "shows a list of invoice in json" do
+      merchant = create(:merchant)
+      invoice1 = create(:invoice, merchant_id: merchant.id)
+      invoice2 = create(:invoice, merchant_id: merchant.id)
+      invoice3 = create(:invoice, merchant_id: merchant.id)
+
+      get "/api/v1/merchants/#{merchant.id}/invoices"
+
+      expect(response).to be_successful
+
+      invoices = JSON.parse(response.body)
+
+      expect(invoices.length).to eq(3)
+      expect(invoices.first["id"]).to eq(invoice1.id)
+      expect(invoices.last["id"]).to eq(invoice3.id)
+    end
+  end
 end
