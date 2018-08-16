@@ -65,4 +65,24 @@ describe 'Api for invoice relationships' do
       expect(invoice_items.first['id']).to eq(invoice_item1.id) 
     end
   end
+  context 'GET /api/v1/invoices/:id/items' do
+    it 'displays items for a specific invoice' do
+      invoice1  = create(:invoice)
+      invoice2  = create(:invoice)
+      item1 = create(:item)
+      item2 = create(:item)
+      invoice_item1 = create(:invoice_item, invoice_id: invoice1.id, item_id: item1.id)
+      invoice_item2 = create(:invoice_item, invoice_id: invoice1.id, item_id: item2.id)
+      invoice_item3 = create(:invoice_item, invoice_id: invoice2.id, item_id: item1.id)
+
+      get "/api/v1/invoices/#{invoice1.id}/items"
+
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body)
+
+      expect(items.count).to eq(2)
+      expect(items.first['id']).to eq(item1.id) 
+    end
+  end
 end
