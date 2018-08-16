@@ -103,4 +103,21 @@ describe "Transactions API" do
 
     end
   end
+  context "GET /api/v1/transactions/find_all?" do
+    it 'finds all ids through find_all query params' do
+      invoice = create(:invoice)
+      id1 = create(:transaction, invoice_id: invoice.id).id
+      id2 = create(:transaction, invoice_id: invoice.id).id
+      id3 = create(:transaction, invoice_id: invoice.id).id
+
+      get "/api/v1/transactions/find_all?id=#{id1}"
+
+      transaction = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(transaction.length).to eq(1)
+
+    end
+  end
+  
 end
