@@ -1,6 +1,6 @@
 # Rails Engine
 
-Rails Engine is a Rails API with a postgresql database project built in Turing School of Software and Design's Module 3 Backend course. This API allows consuption of sales data of an Etsy-style store.
+Rails Engine is a Rails API with a PostgresQL database project built in Turing School of Software and Design's Module 3 Backend course. This API allows consuption of sales data of an Etsy-style store.
 
 ### Setup
 
