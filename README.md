@@ -1,24 +1,43 @@
-# README
+# Rails Engine
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails Engine is a Rails API with a PostgresQL database project built in Turing School of Software and Design's Module 3 Backend course. This API allows consuption of sales data of an Etsy-style store.
 
-Things you may want to cover:
+### Setup
 
-* Ruby version
+Clone the repository
 
-* System dependencies
+```
+$ git clone https://github.com/1powechri2/Rails-Engine.git
+```
 
-* Configuration
+Bundle the gems
 
-* Database creation
+```
+$ bundle
+$ bundle update
+```
 
-* Database initialization
+Next, run `rake` to create, migrate, and seed the database.
 
-* How to run the test suite
+```
+$ rake
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+To see the endpoints run the Rails server
 
-* Deployment instructions
+```
+$ rails s
+```
 
-* ...
+To run the test suite
+
+```
+$ rspec
+```
+
+---
+
+### Software Versions
+
+- Ruby 2.4.1
+- Rails 5.2.1
