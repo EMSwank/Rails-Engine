@@ -20,4 +20,13 @@ class Item < ApplicationRecord
     order('total_sold desc').
     limit(x)
   end
+
+  def best_day
+    invoices.
+    select('invoices.*, count(invoices.*) as total_sales').
+    joins(:transactions).where(transactions: {result: 'success'}).
+    group(:id).
+    order('total_sales desc').
+    order('updated_at desc').first.updated_at
+  end
 end
