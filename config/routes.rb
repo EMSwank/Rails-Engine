@@ -7,6 +7,9 @@ Rails.application.routes.draw do
       get '/merchants/:id/invoices', to: 'merchants/invoices_relation#index'
       get '/merchants/most_revenue', to: 'merchants/most_revenue#index'
       get '/merchants/most_items', to: 'merchants/most_items#index'
+      get '/merchants/revenue', to: 'merchants/revenue#index'
+      get '/merchants/:id/revenue', to: 'merchants/revenue#show'
+      get '/merchants/:id/favorite_customer', to: 'merchants/favorite_customer#show'
       resources :merchants, only: [:index, :show]
       get '/transactions/find', to: 'transactions/search#show'
       get '/transactions/find_all', to: 'transactions/search#index'
@@ -29,6 +32,7 @@ Rails.application.routes.draw do
       get '/customers/find_all', to: 'customers/search#index'
       get '/customers/:id/invoices', to: 'customers/invoices_relation#index'
       get '/customers/:id/transactions', to: 'customers/transactions_relation#index'
+      get '/customers/:id/favorite_merchant', to: 'customers/favorite_merchant#show'
       resources :customers, only: [:index, :show]
       get '/invoice_items/find', to: 'invoice_items/search#show'
       get '/invoice_items/find_all', to: 'invoice_items/search#index'

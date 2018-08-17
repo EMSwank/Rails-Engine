@@ -1,12 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Customer, type: :model do
-    it { should have_many(:invoices) }
-    it { should have_many(:merchants).through(:invoices) }
-    it { should have_many(:invoice_items).through(:invoices) }
-    it { should have_many(:transactions).through(:invoices) }
-  describe 'instance method' do
-    it 'can find a favorite merchant' do
+describe 'API for customer favorite merchant' do
+  context 'GET api/v1/customers/:id/favorite_merchant' do
+    it 'returns a merchant for the customer\'s most successful transactions' do
       customer = create(:customer)
 
       merchant1 = create(:merchant)
@@ -20,7 +16,13 @@ RSpec.describe Customer, type: :model do
       trans2 = create(:transaction, invoice_id: invoice2.id, result: 'success')
       trans3 = create(:transaction, invoice_id: invoice3.id, result: 'success')
 
-      expect(customer.favorite_merchant).to eq(merchant1)
+      get "/api/v1/customers/#{customer.id}/favorite_merchant"
+
+      expect(response).to be_successful
+
+      merch = JSON.parse(response.body)
+
+      expect(merch['id']).to eq(merchant1.id)
     end
   end
 end

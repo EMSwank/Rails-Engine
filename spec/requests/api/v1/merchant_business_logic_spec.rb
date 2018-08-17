@@ -58,7 +58,7 @@ describe 'Api for top x merchants by revenue' do
       invoice_item1 = create(:invoice_item, invoice_id: invoice1.id, quantity: 6, unit_price: 50)
       invoice_item2 = create(:invoice_item, invoice_id: invoice2.id, quantity: 2, unit_price: 300)
       invoice_item3 = create(:invoice_item, invoice_id: invoice3.id, quantity: 10, unit_price: 100)
-      invoice_item4 = create(:invoice_item, invoice_id: invoice4.id, quantity: 10, unit_price: 200)
+      invoice_item4 = create(:invoice_item, invoice_id: invoice4.id, quantity: 11, unit_price: 200)
       invoice_item5 = create(:invoice_item, invoice_id: invoice5.id, quantity: 5, unit_price: 100)
 
       get '/api/v1/merchants/most_items?quantity=3'
@@ -69,6 +69,35 @@ describe 'Api for top x merchants by revenue' do
 
       expect(merchants.first['id']).to eq(merchant4.id)
       expect(merchants.last['id']).to eq(merchant1.id)
+    end
+    it 'can return total revenue for successful transactions' do
+      merchant = create(:merchant)
+
+      invoice1 = create(:invoice, merchant_id: merchant.id)
+      invoice2 = create(:invoice, merchant_id: merchant.id)
+      invoice3 = create(:invoice, merchant_id: merchant.id)
+      invoice4 = create(:invoice, merchant_id: merchant.id)
+      invoice5 = create(:invoice, merchant_id: merchant.id)
+
+      transaction1 = create(:transaction, invoice_id: invoice1.id, result: 'success')
+      transaction2 = create(:transaction, invoice_id: invoice2.id, result: 'success')
+      transaction3 = create(:transaction, invoice_id: invoice3.id, result: 'success')
+      transaction4 = create(:transaction, invoice_id: invoice4.id, result: 'success')
+      transaction5 = create(:transaction, invoice_id: invoice5.id, result: 'success')
+
+      invoice_item1 = create(:invoice_item, invoice_id: invoice1.id, quantity: 6, unit_price: 50)
+      invoice_item2 = create(:invoice_item, invoice_id: invoice2.id, quantity: 2, unit_price: 300)
+      invoice_item3 = create(:invoice_item, invoice_id: invoice3.id, quantity: 10, unit_price: 100)
+      invoice_item4 = create(:invoice_item, invoice_id: invoice4.id, quantity: 15, unit_price: 200)
+      invoice_item5 = create(:invoice_item, invoice_id: invoice5.id, quantity: 5, unit_price: 100)
+
+      get "/api/v1/merchants/#{merchant.id}/revenue"
+
+      expect(response).to be_successful
+
+      total = JSON.parse(response.body)
+
+      expect(total['revenue']).to eq("54.0")
     end
   end
 end
