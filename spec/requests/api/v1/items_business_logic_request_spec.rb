@@ -1,12 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Item, type: :model do
-  it { should have_many(:invoice_items) }
-  it { should have_many(:invoices).through(:invoice_items) }
-  it { should belong_to(:merchant) }
-
-  describe 'class methods' do
-    it 'returns the top items ranked by revenue' do
+describe 'Api for index business logic' do
+  context 'GET /api/v1/items/most_revenue?quantity=x' do
+    it 'returns api for the top items ranked by revenue' do
       item1 = create(:item)
       item2 = create(:item)
       item3 = create(:item)
@@ -22,8 +18,16 @@ RSpec.describe Item, type: :model do
       transaction2 = create(:transaction, invoice_id: invoice2.id, result: 'success')
 
       expect(Item.most_revenue(3)).to eq([item2, item1, item3])
+
+      get "/api/v1/items/most_revenue?quantity=3"
+
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body)
+
+      expect(items.length).to eq(3)
     end
-    it 'returns the top items ranked by number sold' do
+    it 'returns api for the top items ranked by total sold' do
       item1 = create(:item)
       item2 = create(:item)
       item3 = create(:item)
@@ -38,7 +42,15 @@ RSpec.describe Item, type: :model do
       transaction1 = create(:transaction, invoice_id: invoice1.id, result: 'success')
       transaction2 = create(:transaction, invoice_id: invoice2.id, result: 'success')
 
-      expect(Item.most_sold(3)).to eq([item2, item1, item3])
+      expect(Item.most_revenue(3)).to eq([item2, item1, item3])
+
+      get "/api/v1/items/most_items?quantity=3"
+
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body)
+
+      expect(items.length).to eq(3)
     end
     it 'returns the date for an item when it sold the most' do
       item = create(:item)
@@ -54,7 +66,13 @@ RSpec.describe Item, type: :model do
       transaction1 = create(:transaction, invoice_id: invoice1.id, result: 'success')
       transaction2 = create(:transaction, invoice_id: invoice2.id, result: 'success')
 
-      expect(item.best_day).to eq(invoice2.updated_at)
+      get "/api/v1/items/#{item.id}/best_day"
+
+      expect(response).to be_successful
+
+      date = JSON.parse(response.body)
+
+      expect(date).to eq("2012-04-09T08:57:21.000Z")
     end
   end
 end
