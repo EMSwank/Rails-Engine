@@ -1,12 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Item, type: :model do
-  it { should have_many(:invoice_items) }
-  it { should have_many(:invoices).through(:invoice_items) }
-  it { should belong_to(:merchant) }
-
-  describe 'class methods' do
-    it 'returns the top items ranked by revenue' do
+describe 'Api for index business logic' do
+  context 'GET /api/v1/items/most_revenue?quantity=x' do
+    it 'returns api for the top items ranked by revenue' do
       item1 = create(:item)
       item2 = create(:item)
       item3 = create(:item)
@@ -22,6 +18,14 @@ RSpec.describe Item, type: :model do
       transaction2 = create(:transaction, invoice_id: invoice2.id, result: 'success')
 
       expect(Item.most_revenue(3)).to eq([item2, item1, item3])
+
+      get "/api/v1/items/most_revenue?quantity=3"
+
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body)
+
+      expect(items.length).to eq(3)
     end
   end
 end
