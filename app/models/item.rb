@@ -23,8 +23,8 @@ class Item < ApplicationRecord
 
   def best_day
     invoices.
-    select('invoices.*, count(invoices.*) as total_sales').
-    joins(:transactions).where(transactions: {result: 'success'}).
+    select('invoices.*, sum(invoice_items.quantity) as total_sales').
+    joins(:transactions, :invoice_items).where(transactions: {result: 'success'}).
     group(:id).
     order('total_sales desc').
     order('updated_at desc').first.updated_at
