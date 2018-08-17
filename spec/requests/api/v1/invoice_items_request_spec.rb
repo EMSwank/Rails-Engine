@@ -219,5 +219,18 @@ describe 'Invoice Items API' do
       expect(inv_items.first['quantity']).to eq(inv_item_1.quantity)
       expect(inv_items.last['quantity']).to eq(inv_item_2.quantity)
     end
+    it 'finds and returns a random Invoice Item' do
+      invoice_item1 = create(:invoice_item)
+      invoice_item2 = create(:invoice_item)
+      invoice_item3 = create(:invoice_item)
+
+      get "/api/v1/invoice_items/random"
+
+      expect(response).to be_successful
+
+      invoice_item = JSON.parse(response.body)
+
+      expect(invoice_item.values.count).to eq(5)
+    end
   end
 end

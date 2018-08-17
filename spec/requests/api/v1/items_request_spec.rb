@@ -215,5 +215,18 @@ describe 'Items API' do
       expect(item.first['name']).to eq(item_1.name)
       expect(item.last['name']).to eq(item_2.name)
     end
+    it 'finds and returns a random Item' do
+      item1 = create(:item)
+      item2 = create(:item)
+      item3 = create(:item)
+
+      get "/api/v1/items/random"
+
+      expect(response).to be_successful
+
+      item = JSON.parse(response.body)
+
+      expect(item.values.count).to eq(5)
+    end
   end
 end
