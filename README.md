@@ -7,7 +7,7 @@ Rails Engine is a Rails API with a PostgresQL database project built in Turing S
 Clone the repository
 
 ```
-$ git clone https://github.com/1powechri2/Rails-Engine.git
+$ git clone https://github.com/EMSwank/Rails-Engine.git
 ```
 
 Bundle the gems
